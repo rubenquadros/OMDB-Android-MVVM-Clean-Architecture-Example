@@ -1,5 +1,7 @@
 package com.ruben.remote.restapi
 
+import com.ruben.remote.model.detail.DetailsResponse
+import com.ruben.remote.model.detail.DetailsRequest
 import com.ruben.remote.model.search.SearchRequest
 import com.ruben.remote.model.search.SearchResponse
 
@@ -8,4 +10,5 @@ import com.ruben.remote.model.search.SearchResponse
  **/
 interface RestApi {
     suspend fun getSearchResults(searchRequest: SearchRequest): SearchResponse
+    suspend fun getDetails(detailsRequest: DetailsRequest): DetailsResponse
 }

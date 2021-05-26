@@ -1,5 +1,6 @@
 package com.ruben.movieapplication.injection
 
+import com.ruben.domain.interactor.GetDetailsUseCase
 import com.ruben.domain.interactor.SearchUseCase
 import org.koin.dsl.module
 
@@ -9,5 +10,8 @@ import org.koin.dsl.module
 val useCaseModule = module {
     single {
         return@single SearchUseCase(get())
+    }
+    single {
+        return@single GetDetailsUseCase(get())
     }
 }

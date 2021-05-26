@@ -7,4 +7,5 @@ object ApiConstants {
 
     const val BASE_URL = "https://www.omdbapi.com/"
     const val TIMEOUT: Long = 30
+    const val API_FAIL = "False"
 }

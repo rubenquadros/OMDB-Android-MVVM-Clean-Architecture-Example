@@ -1,6 +1,6 @@
 package com.ruben.remote.retrofit
 
-import com.ruben.remote.model.detail.DetailResponse
+import com.ruben.remote.model.detail.DetailsResponse
 import com.ruben.remote.model.search.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,6 +18,6 @@ interface RetrofitApi {
 
     @GET("?apikey=17b7d079")
     suspend fun getDetails(
-        @Query("i") id: Int
-    ): DetailResponse
+        @Query("i") id: String
+    ): DetailsResponse
 }

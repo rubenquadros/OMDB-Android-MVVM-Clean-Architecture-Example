@@ -1,9 +1,9 @@
-package com.ruben.movieapplication.presentation
+package com.ruben.movieapplication.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ruben.domain.interactor.SearchUseCase
-import com.ruben.domain.model.SearchResultRecord
+import com.ruben.domain.model.search.SearchResultRecord
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by ruben.quadros on 26/05/21.
  **/
-data class DetailResponse(
+data class DetailsResponse(
     @SerializedName("Title") val title : String,
-    @SerializedName("Year") val year : Int,
+    @SerializedName("Year") val year : String,
     @SerializedName("Rated") val rated : String,
     @SerializedName("Released") val released : String,
     @SerializedName("Runtime") val runtime : String,
@@ -22,10 +22,14 @@ data class DetailResponse(
     @SerializedName("Poster") val poster : String,
     @SerializedName("Ratings") val ratings : List<Ratings>,
     @SerializedName("Metascore") val metascore : String,
-    @SerializedName("imdbRating") val imdbRating : Double,
+    @SerializedName("imdbRating") val imdbRating : String,
     @SerializedName("imdbVotes") val imdbVotes : String,
     @SerializedName("imdbID") val imdbID : String,
     @SerializedName("Type") val type : String,
-    @SerializedName("totalSeasons") val totalSeasons : Int,
-    @SerializedName("Response") val response : Boolean
+    @SerializedName("totalSeasons") val totalSeasons : String?,
+    @SerializedName("DVD") val dvd: String?,
+    @SerializedName("BoxOffice") val boxOffice: String?,
+    @SerializedName("Production") val production: String?,
+    @SerializedName("Website") val website: String?,
+    @SerializedName("Response") val response : String
 )

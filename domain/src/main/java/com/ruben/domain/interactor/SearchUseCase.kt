@@ -1,7 +1,7 @@
 package com.ruben.domain.interactor
 
 import com.ruben.domain.BaseUseCase
-import com.ruben.domain.model.SearchResultRecord
+import com.ruben.domain.model.search.SearchResultRecord
 import com.ruben.domain.repository.OmdbRepository
 
 /**

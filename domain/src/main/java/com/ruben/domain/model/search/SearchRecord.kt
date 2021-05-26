@@ -1,4 +1,4 @@
-package com.ruben.domain.model
+package com.ruben.domain.model.search
 
 /**
  * Created by ruben.quadros on 26/05/21.

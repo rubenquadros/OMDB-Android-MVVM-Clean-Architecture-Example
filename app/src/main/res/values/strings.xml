@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Movie Finder</string>
+    <string name="app_crash_message">"Oops there was some error! The developers have been notified</string>
+    <string name="search_hint">Search…</string>
+    <string name="details_ratings_label">Rating</string>
+    <string name="details_release_label">Released</string>
+    <string name="details_language_label">Language</string>
 </resources>

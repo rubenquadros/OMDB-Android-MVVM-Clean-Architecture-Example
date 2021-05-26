@@ -1,6 +1,7 @@
 package com.ruben.movieapplication.injection
 
-import com.ruben.movieapplication.presentation.SearchViewModel
+import com.ruben.movieapplication.presentation.details.DetailsViewModel
+import com.ruben.movieapplication.presentation.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -10,5 +11,8 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel {
         SearchViewModel(get())
+    }
+    viewModel {
+        DetailsViewModel(get())
     }
 }
