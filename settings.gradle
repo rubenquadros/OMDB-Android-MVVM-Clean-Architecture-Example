@@ -1,0 +1,5 @@
+include ':remote'
+include ':domain'
+include ':data'
+include ':app'
+rootProject.name = "My Application"
