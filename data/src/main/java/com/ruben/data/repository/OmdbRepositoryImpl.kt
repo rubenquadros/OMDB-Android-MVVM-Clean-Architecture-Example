@@ -3,6 +3,7 @@ package com.ruben.data.repository
 import com.ruben.data.DataSource
 import com.ruben.data.mapper.DetailsMapper
 import com.ruben.data.mapper.SearchMapper
+import com.ruben.domain.model.base.Record
 import com.ruben.domain.model.details.DetailsRecord
 import com.ruben.domain.model.search.SearchResultRecord
 import com.ruben.domain.repository.OmdbRepository
@@ -17,13 +18,13 @@ class OmdbRepositoryImpl(private val dataSource: DataSource): OmdbRepository {
     private val searchMapper = SearchMapper()
     private val detailsMapper = DetailsMapper()
 
-    override suspend fun getSearchQuery(searchTerm: String, pageNo: Int): SearchResultRecord {
+    override suspend fun getSearchQuery(searchTerm: String, pageNo: Int): Record<SearchResultRecord> {
         return dataSource.api().restApi().getSearchResults(SearchRequest(searchTerm, 1)).run {
             searchMapper.mapSearchResult(this)
         }
     }
 
-    override suspend fun getDetails(id: String): DetailsRecord {
+    override suspend fun getDetails(id: String): Record<DetailsRecord> {
         return dataSource.api().restApi().getDetails(DetailsRequest(id)).run {
             detailsMapper.mapDetailsResponse(this)
         }

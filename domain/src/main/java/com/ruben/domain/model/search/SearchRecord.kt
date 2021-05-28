@@ -6,5 +6,6 @@ package com.ruben.domain.model.search
 data class SearchRecord(
     val title: String,
     val id: String,
-    val poster: String
+    val poster: String,
+    val year: String
 )

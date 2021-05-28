@@ -5,7 +5,7 @@ package com.ruben.remote.util
  **/
 object ApiConstants {
 
-    const val BASE_URL = "https://www.omdbapi.com/"
+    const val BASE_URL = "https://www.omdbapi.com/?apikey=17b7d079"
     const val TIMEOUT: Long = 30
     const val API_FAIL = "False"
 }

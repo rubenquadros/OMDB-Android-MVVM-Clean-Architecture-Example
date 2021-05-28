@@ -3,9 +3,11 @@ package com.ruben.movieapplication.presentation.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.addRepeatingJob
 import com.bumptech.glide.Glide
+import com.ruben.domain.model.base.StatusRecord
 import com.ruben.domain.model.details.DetailsRecord
 import com.ruben.movieapplication.R
 import com.ruben.movieapplication.base.BaseActivity
@@ -19,7 +21,6 @@ class DetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
     private val detailsViewModel: DetailsViewModel by viewModel()
-    private var imdbID = ""
 
     companion object {
         fun newIntent(context: Context, id: String): Intent {
@@ -33,27 +34,40 @@ class DetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         readIntent()
         observeData()
-        getDetails()
     }
 
     private fun readIntent() {
         intent.getStringExtra(AppConstants.IMDB_ID)?.let {
-            imdbID = it
+            detailsViewModel.getDetails(it)
         }
     }
 
     private fun observeData() {
         addRepeatingJob(Lifecycle.State.STARTED) {
-            detailsViewModel.getDetailsResult().collect {
-                showDetails(it)
+            detailsViewModel.getDetailsResult().collect { record ->
+                when (record.status) {
+                    StatusRecord.LOADING -> {
+                        AppUtility.showProgress(binding.detailsPb, this@DetailsActivity)
+                    }
+                    StatusRecord.SUCCESS -> {
+                        record.data?.let {
+                            showDetails(it)
+                        }
+                    }
+                    StatusRecord.FAIL -> {
+                        finish()
+                    }
+                }
             }
         }
     }
 
     private fun showDetails(detailsRecord: DetailsRecord) {
-        AppUtility.stopProgress(binding.detailsPb, this)
+        binding.detailsContainer.visibility = View.VISIBLE
         Glide.with(this).load(detailsRecord.poster)
             .placeholder(R.drawable.placeholder)
             .into(binding.posterIv)
@@ -65,14 +79,12 @@ class DetailsActivity : BaseActivity() {
         binding.releaseDateTv.text = detailsRecord.releaseDate
         binding.languageLabel.text = getString(R.string.details_language_label)
         binding.languageTv.text = detailsRecord.language
+        AppUtility.stopProgress(binding.detailsPb, this)
     }
 
-    private fun getDetails() {
-        if (imdbID.isEmpty()) {
-            finish()
-        } else {
-            AppUtility.showProgress(binding.detailsPb, this)
-            detailsViewModel.getDetails(imdbID)
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        super.onSupportNavigateUp()
+        onBackPressed()
+        return true
     }
 }

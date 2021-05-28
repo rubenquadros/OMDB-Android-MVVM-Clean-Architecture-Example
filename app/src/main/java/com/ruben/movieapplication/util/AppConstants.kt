@@ -6,4 +6,5 @@ package com.ruben.movieapplication.util
 object AppConstants {
 
     const val IMDB_ID = "id"
+    const val TEXT_PATTERN = "^[a-zA-Z]*$"
 }

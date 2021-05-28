@@ -5,4 +5,5 @@
     <string name="details_ratings_label">Rating</string>
     <string name="details_release_label">Released</string>
     <string name="details_language_label">Language</string>
+    <string name="no_result">No Results Found</string>
 </resources>

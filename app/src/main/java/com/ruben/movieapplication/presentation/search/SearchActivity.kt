@@ -1,9 +1,11 @@
 package com.ruben.movieapplication.presentation.search
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.addRepeatingJob
+import com.ruben.domain.model.base.StatusRecord
 import com.ruben.domain.model.search.SearchResultRecord
 import com.ruben.movieapplication.base.BaseActivity
 import com.ruben.movieapplication.base.ItemClickListener
@@ -35,8 +37,20 @@ class SearchActivity : BaseActivity(), AndroidScopeComponent, ItemClickListener 
 
   private fun observeData() {
     addRepeatingJob(Lifecycle.State.STARTED) {
-      searchViewModel.getSearchResult().collect {
-        handleSearchResult(it)
+      searchViewModel.getSearchResult().collect { record ->
+        when (record.status) {
+          StatusRecord.LOADING -> {
+            //do nothing
+          }
+          StatusRecord.SUCCESS -> {
+            record.data?.let {
+              handleSearchResult(it)
+            }
+          }
+          StatusRecord.FAIL -> {
+            handleNoResults()
+          }
+        }
       }
     }
   }
@@ -45,7 +59,7 @@ class SearchActivity : BaseActivity(), AndroidScopeComponent, ItemClickListener 
     binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
         //search for given query
-        if (!query.isNullOrEmpty()) {
+        if (!query.isNullOrEmpty() && searchViewModel.isValidQuery(query)) {
           AppUtility.showProgress(binding.searchPb, this@SearchActivity)
           searchViewModel.getQueryResults(query, 1)
         }
@@ -67,10 +81,18 @@ class SearchActivity : BaseActivity(), AndroidScopeComponent, ItemClickListener 
   private fun handleSearchResult(searchResultRecord: SearchResultRecord) {
     AppUtility.stopProgress(binding.searchPb, this)
     if (searchResultRecord.searchResults.isNotEmpty()) {
+      binding.noResultContainer.visibility = View.GONE
+      binding.searchResultsRv.visibility = View.VISIBLE
       resultAdapter.setItems(searchResultRecord)
       resultAdapter.setListener(this)
       resultAdapter.notifyDataSetChanged()
     }
+  }
+
+  private fun handleNoResults() {
+    AppUtility.stopProgress(binding.searchPb, this@SearchActivity)
+    binding.searchResultsRv.visibility = View.GONE
+    binding.noResultContainer.visibility = View.VISIBLE
   }
 
   override fun onItemClick(result: String) {

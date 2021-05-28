@@ -11,7 +11,7 @@ import com.ruben.remote.retrofit.RetrofitApi
  **/
 class RestApiImpl(private val retrofitApi: RetrofitApi): RestApi {
     override suspend fun getSearchResults(searchRequest: SearchRequest): SearchResponse {
-       return retrofitApi.searchQuery(searchRequest.searchTerm, searchRequest.pageNo)
+       return retrofitApi.searchQuery(searchTerm = searchRequest.searchTerm, pageNo = searchRequest.pageNo)
     }
 
     override suspend fun getDetails(detailsRequest: DetailsRequest): DetailsResponse {
